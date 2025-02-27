@@ -1,4 +1,3 @@
-// pages/index.tsx
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
@@ -13,14 +12,12 @@ export default function HomePage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    // Fetch the first 151 Pokémon
     axios
       .get("https://pokeapi.co/api/v2/pokemon?limit=151")
       .then((res) => setPokemonList(res.data.results))
       .catch((err) => console.error(err));
   }, []);
 
-  // Filter based on search query
   const filteredPokemon = pokemonList.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(search.toLowerCase())
   );
@@ -31,7 +28,7 @@ export default function HomePage() {
       <div className="mb-6 flex justify-center">
         <input
           type="text"
-          placeholder="Search Pokémon..."
+          placeholder="Search Pokemon..."
           className="border p-2 rounded w-full max-w-md"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -39,7 +36,6 @@ export default function HomePage() {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {filteredPokemon.map((pokemon, index) => {
-          // Extract id from URL: pokeapi urls typically end with /:id/
           const id = pokemon.url.split("/").filter(Boolean).pop();
           return (
             <Link key={pokemon.name} href={`/pokemon/${id}`}>
